@@ -1,4 +1,4 @@
-# My Problem Solving Repository
+# My Project Repository
 
 Welcome to my GitHub repository! This repository contains a collection of my basic projects and games. I've worked on various JavaScript projects, developed games in C and C++, and continually strive to improve my programming skills.
 
@@ -6,6 +6,7 @@ Welcome to my GitHub repository! This repository contains a collection of my bas
 - [About](#about)
 - [Projects](#projects)
   - [Basic JavaScript Projects](#basic-javascript-projects)
+  - [Intermediate JavaScript Projects](#intermediate-javascript-projects)
 - [Games](#games)
   - [Snake Xenzia](#snake-xenzia)
   - [Racing Game](#racing-game)
@@ -23,6 +24,12 @@ A collection of basic projects developed using JavaScript, including:
 - Form validations
 - Dynamic UI updates
 - Simple interactive applications
+
+### Intermediate JavaScript Projects
+
+A collection of intermediate projects developed using JavaScript, including:
+- Real-time Weather App
+- Food Cart
 
 ## Games
 
