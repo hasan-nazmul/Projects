@@ -9,7 +9,6 @@ Welcome to the Racing Game, an exciting game built with C. This game features bo
 - [Video Demo](#video-demo)
 - [File Handling](#file-handling)
 - [Requirements](#requirements)
-- [Acknowledgments](#acknowledgments)
 - [Contact](#contact)
 
 ## Features
@@ -62,11 +61,6 @@ The game uses file handling to manage user data, high scores, car selections, an
 ## Requirements
 C Compiler (GCC recommended)
 Standard C Libraries
-
-## Acknowledgments
-Thanks to the contributors and developers who helped build this game.
-Inspired by classic racing games and modern features.
-Enjoy the game and happy racing!
 
 ## Contact
 
