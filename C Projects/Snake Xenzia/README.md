@@ -73,7 +73,7 @@ After following the installation steps, run the game executable. The game will s
 
 ## Contributing
 
-Contributions are welcome! If you have any ideas or improvements, feel free to fork the repository and create a pull request. Please follow the [code of conduct](https://github.com/hasan-nazmul/Projects/blob/main/README.md) when contributing.
+Contributions are welcome! If you have any ideas or improvements, feel free to fork the repository and create a pull request. Please follow the [code of conduct](https://github.com/hasan-nazmul/Projects/blob/main/CODE_OF_CONDUCT.md) when contributing.
 
 ## Contact
 
