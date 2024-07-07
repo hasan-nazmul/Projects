@@ -30,8 +30,8 @@ To run this game, you need to have a C compiler installed on your machine. Follo
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/snake-xenzia.git
-    cd snake-xenzia
+    git clone https://github.com/hasan-nazmul/Projects.git
+    cd '.\Projects\C Projects\Snake Xenzia\'
     ```
 
 2. Compile the game:
