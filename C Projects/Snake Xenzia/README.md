@@ -9,6 +9,7 @@ Snake Xenzia is a classic snake game implemented in C. The objective is to navig
 - [Usage](#usage)
 - [Controls](#controls)
 - [Game Rules](#game-rules)
+- [Video Demo](#video-demo)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
 - [Contact](#contact)
@@ -64,6 +65,9 @@ After following the installation steps, run the game executable. The game will s
 5. The score increases by 10 points for each food item eaten.
 6. The high score is recorded and displayed at the start of each game.
 
+## Video Demo
+Check out the video demo of the game on YouTube: [Snake Xenzia with C](https://youtu.be/33qJ-mIBJFU?si=y6xGYaHobFPZT5d1)
+
 ## Future Enhancements
 
 - Add levels with increasing difficulty.
@@ -83,5 +87,3 @@ If you have any questions or suggestions, feel free to reach out:
 - GitHub: [Nazmul Hasan](https://github.com/hasan-nazmul)
 
 Thank you for checking out my Snake Xenzia project. Have fun playing!
-
-Video Demo: [Snake Xenzia with C](https://youtu.be/33qJ-mIBJFU?si=y6xGYaHobFPZT5d1)
