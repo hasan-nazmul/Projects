@@ -84,4 +84,4 @@ If you have any questions or suggestions, feel free to reach out:
 
 Thank you for checking out my Snake Xenzia project. Have fun playing!
 
-Video Demo: https://youtu.be/33qJ-mIBJFU?si=y6xGYaHobFPZT5d1
+Video Demo: [Snake Xenzia woth C](https://youtu.be/33qJ-mIBJFU?si=y6xGYaHobFPZT5d1)
