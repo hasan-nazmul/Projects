@@ -41,12 +41,12 @@ Welcome to the Racing Game, an exciting game built with C. This game features bo
     ```
 ## Controls
 
-# Menu Navigation
+### Menu Navigation
 - Arrow Keys (Up-Down): Navigate through the options
 - Spacebar: Select an option
 - Escape (Esc): Go back to the previous page
 
-# In-Game Controls
+### In-Game Controls
 - Single Player Mode: Use arrow keys (left-right) to move the car.
 - Multiplayer Mode:
   - Player 1: Use 'a' (left) and 's' (right) to move the car.
