@@ -27,7 +27,7 @@ Examples of unacceptable behavior by participants include:
 
 ## Reporting Guidelines
 
-If you experience or witness unacceptable behavior, or have any other concerns, please report it by contacting [me](nh2826239@gmail.com). All reports will be handled with discretion and confidentiality.
+If you experience or witness unacceptable behavior, or have any other concerns, please report it by contacting [me](mailto:nh2826239@gmail.com). All reports will be handled with discretion and confidentiality.
 
 ## Enforcement
 
