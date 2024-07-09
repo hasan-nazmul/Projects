@@ -39,7 +39,7 @@ const setTemperature = () => {
       place.textContent = address
     })
   
-  let APIkey = 'bb76605230b7d33d37d5aedb298a98be'
+  let APIkey = 'YOUR_API_KEY_HERE'
   url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${APIkey}`;
 
   fetch(url)
