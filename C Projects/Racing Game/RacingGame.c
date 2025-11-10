@@ -9,10 +9,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define ALPHA20 {219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219}
-#define BETA20 {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}
-#define ALPHA12 {219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219}
-#define BETA12 {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}
+#define ALPHA20 {(char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219}
+#define BETA20 {(char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32}
+#define ALPHA12 {(char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219, (char) 219}
+#define BETA12 {(char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32, (char) 32}
 #define GROUND1_LEFT 33
 #define GROUND1_RIGHT 49
 #define GROUND2_LEFT 69
@@ -33,498 +33,348 @@
 #define BLOOD_RED 20
 #define PINK 13
 
+void gotoxy(int x, int y);
+void gotoXY(COORD C);
+void setColor(int ForgC);
+void canvas(COORD upper_left, COORD lower_right, char ch1, char ch2, char ch3, char ch4, int color);
+int random(int left_val, int right_val);
+void draw_vehicle(char str[10][10], COORD C, int flag, int color);
+void go_track(char str[100][100], COORD C, int color);
+COORD linear(COORD pos);
+COORD rash1(COORD pos);
+COORD rash2(COORD pos);
+void threat_generator();
+void mono_threat_generator();
+void threat_mover(int i);
+int game_over();
+void multiplay();
+void scoreboard();
+void pause_read(int *p, COORD *C, int *s);
+void pause_write(int p, COORD C, int s);
+void monoplay();
+void mono_game_crash();
+void multi_game_crash(int f);
+void draw_alphabet(char str[20][10], int x, int y, int color, int size);
+void setup();
+int select_mode();
+int single_player();
+int login(int f);
+int profile();
+int your_profile();
+void selector(COORD C, int flag);
+int purchase();
+int signup(int f);
+int about_us();
+int select_car();
+void leaderboard();
+void sort();
+int IDcheck();
+int uniqueID();
+void saveInfo();
+void readData();
+void writeData();
+
 char foot_path[100][100] = {ALPHA20, ALPHA20, BETA20, BETA20, BETA20, BETA20, ALPHA20, ALPHA20, BETA20, BETA20, BETA20, BETA20, ALPHA20, ALPHA20, BETA20, BETA20, BETA20, BETA20, ALPHA20, ALPHA20, BETA20, BETA20, BETA20, BETA20, ALPHA20, ALPHA20, BETA20, BETA20, BETA20, BETA20};
 
 char road_divider[100][100] = {ALPHA12, ALPHA12, BETA12, BETA12, BETA12, BETA12, ALPHA12, ALPHA12, BETA12, BETA12, BETA12, BETA12, ALPHA12, ALPHA12, BETA12, BETA12, BETA12, BETA12, ALPHA12, ALPHA12, BETA12, BETA12, BETA12, BETA12, ALPHA12, ALPHA12, BETA12, BETA12, BETA12, BETA12};
 
 char car[10][10][10] = {
 
-    {{254, 254, 254, 254}, {219, 223, 223, 219}, {219, 219, 219, 219}, {219, 220, 220, 219}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)219, (char)223, (char)223, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)220, (char)220, (char)219}, {(char)254, (char)254, (char)254, (char)254}},
 
-    {{254, 254, 254, 254}, {219, 220, 220, 219}, {219, 219, 219, 219}, {219, 223, 223, 219}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)219, (char)220, (char)220, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)223, (char)223, (char)219}, {(char)254, (char)254, (char)254, (char)254}},
 
-    {{254, 254, 254, 254}, {220, 219, 219, 220}, {32, 219, 219, 32}, {223, 219, 219, 223}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)220, (char)219, (char)219, (char)220}, {(char)32, (char)219, (char)219, (char)32}, {(char)223, (char)219, (char)219, (char)223}, {(char)254, (char)254, (char)254, (char)254}},
 
-    {{254, 254, 254, 254}, {223, 219, 219, 223}, {32, 219, 219, 32}, {220, 219, 219, 220}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)223, (char)219, (char)219, (char)223}, {(char)32, (char)219, (char)219, (char)32}, {(char)220, (char)219, (char)219, (char)220}, {(char)254, (char)254, (char)254, (char)254}},
 
-    {{254, 254, 254, 254}, {223, 219, 219, 223}, {219, 219, 219, 219}, {220, 219, 219, 220}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)223, (char)219, (char)219, (char)223}, {(char)219, (char)219, (char)219, (char)219}, {(char)220, (char)219, (char)219, (char)220}, {(char)254, (char)254, (char) 254, (char)254}},
 
-    {{254, 254, 254, 254}, {220, 219, 219, 220}, {219, 219, 219, 219}, {223, 219, 219, 223}, {254, 254, 254, 254}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)220, (char)219, (char)219, (char)220}, {(char)219, (char)219, (char)219, (char)219}, {(char)223, (char)219, (char)219, (char)223}, {(char)254, (char)254, (char) 254, (char)254}},
 
-    {{254, 254, 254, 254}, {254, 219, 219, 254}, {219, 219, 219, 219}, {254, 219, 219, 254}, {254, 254, 254, 254}}
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)254, (char)219, (char)219, (char)254}, {(char)219, (char)219, (char)219, (char)219}, {(char)254, (char)219, (char)219, (char)254}, {(char)254, (char)254, (char) 254, (char)254}}
 
 };
 
 char obstacles[20][10][10] = {
 
-    {{254, 254, 254, 254}, {254, 32, 32, 254}, {254, 32, 32, 254}, {219, 219, 219, 219}, {219, 219, 219, 219}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)254, (char)32, (char)32, (char)254}, {(char)254, (char)32, (char)32, (char)254}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char) 219, (char)219, (char)219}},
 
-    {{219, 219, 219, 219}, {219, 219, 219, 219}, {219, 219, 219, 219}, {219, 219, 219, 219}, {220, 32, 32, 220}},
+    {{(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)220, (char)32, (char)32, (char)220}},
 
-    {{254, 254, 254, 254}, {219, 219, 219, 219}, {219, 219, 219, 219}, {32, 223, 223, 32}, {219, 254, 254, 219}},
+    {{(char)254, (char)254, (char)254, (char)254}, {(char)219, (char)219, (char)219, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)32, (char)223, (char)223, (char)32}, {(char) 219, (char)254, (char)254, (char)219}},
 
-    {{219, 254, 254, 219}, {220, 220, 220, 220}, {219, 219, 219, 219}, {223, 223, 223, 223}, {219, 254, 254, 219}},
+    {{(char)219, (char)254, (char)254, (char)219}, {(char)220, (char)220, (char)220, (char)220}, {(char)219, (char)219, (char)219, (char)219}, {(char)223, (char)223, (char)223, (char)223}, {(char)219, (char)254, (char)254, (char)219}},
 
-    {{220, 219, 219, 220}, {223, 219, 219, 223}, {32, 219, 219}, {219, 219, 219, 219}, {254, 254, 254, 254}}
+    {{(char)220, (char)219, (char)219, (char)220}, {(char)223, (char)219, (char)219, (char)223}, {(char)32, (char)219, (char)219}, {(char)219, (char)219, (char)219, (char)219}, {(char)254, (char)254, (char)254, (char)254}}
 
 };
 
 char R[20][10] = {
 
-    {219, 219, 179},
+    {(char)219, (char)219, (char)179},
 
-    {219, 218, 219, 179},
+    {(char)219, (char)218, (char)219, (char)179},
 
-    {219, 179, 32, 219, 179},
+    {(char)219, (char)179, (char)32, (char)219, (char)179},
 
-    {219, 179, 32, 32, 219, 179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
 
-    {219, 179, 32, 32, 219, 179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
 
-    {219, 179, 32, 219, 179},
+    {(char)219, (char)179, (char)32, (char)219, (char)179},
 
-    {219, 219, 219, 218},
+    {(char)219, (char)219, (char)219, (char)218},
 
-    {219, 218, 219, 192},
+    {(char)219, (char)218, (char)219, (char)192},
 
-    {219, 179, 32, 219, 192},
+    {(char)219, (char)179, (char)32, (char)219, (char)192},
 
-    {219, 179, 32, 32, 219, 179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
 
 };
 
 char E[20][10] = {
-
-    {219, 219, 219, 219, 179},
-
-    {219, 218, 196, 196},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 219, 219, 179},
-
-    {219, 179},
-
-    {219, 192, 196, 196},
-
-    {219, 219, 219, 219, 179},
-
+    {(char)219, (char)219, (char)219, (char)219, (char)179},
+    {(char)219, (char)218, (char)196, (char)196},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)219, (char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)192, (char)196, (char)196},
+    {(char)219, (char)219, (char)219, (char)219, (char)179}
 };
 
 char T[20][10] = {
-
-    {219, 219, 219, 219, 219, 179},
-
-    {196, 196, 219, 218, 196},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
-    {32, 32, 219, 179},
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219, (char)179},
+    {(char)196, (char)196, (char)219, (char)218, (char)196},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)32, (char)219, (char)179}
 };
 
 char O[20][10] = {
-
-    {32, 219, 219, 219},
-
-    {219, 218, 196, 196, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {32, 219, 219, 219, 218}
-
+    {(char)32, (char)219, (char)219, (char)219},
+    {(char)219, (char)218, (char)196, (char)196, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)219, (char)219, (char)219, (char)218}
 };
 
 char U[20][10] = {
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {32, 219, 219, 219, 218}
-
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)32, (char)219, (char)219, (char)219, (char)218}
 };
 
 char M[20][10] = {
-
-    {219, 192, 32, 32, 219, 179},
-
-    {219, 219, 192, 219, 219, 179},
-
-    {219, 179, 219, 218, 219, 179},
-
-    {219, 179, 219, 179, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179}
-
+    {(char)219, (char)192, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)219, (char)192, (char)219, (char)219, (char)179},
+    {(char)219, (char)179, (char)219, (char)218, (char)219, (char)179},
+    {(char)219, (char)179, (char)219, (char)179, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179}
 };
 
 char B[20][10] = {
-
-    {219, 219, 219, 219, 32},
-
-    {219, 218, 196, 196, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 219, 219, 219, 218},
-
-    {219, 218, 196, 196, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 179, 32, 32, 219, 179},
-
-    {219, 219, 219, 219, 218}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)32},
+    {(char)219, (char)218, (char)196, (char)196, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)219, (char)219, (char)219, (char)218},
+    {(char)219, (char)218, (char)196, (char)196, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)179, (char)32, (char)32, (char)219, (char)179},
+    {(char)219, (char)219, (char)219, (char)219, (char)218}
 };
 
 char L[20][10] = {
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 179},
-
-    {219, 192, 196, 196},
-
-    {219, 219, 219, 219}
-
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)179},
+    {(char)219, (char)192, (char)196, (char)196},
+    {(char)219, (char)219, (char)219, (char)219}
 };
 
 char smallG[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219},
-
-    {219, 32, 32, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219, (char)32, (char)32, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallA[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219}
 };
 
 char smallM[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 32, 219, 219},
-
-    {219, 32, 219, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)32, (char)219, (char)219},
+    {(char)219, (char)32, (char)219, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219}
 };
 
 char smallE[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219},
-
-    {219, 219, 219, 219},
-
-    {219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallO[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallV[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {32, 219, 32, 219, 32},
-
-    {32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)32, (char)219, (char)32, (char)219, (char)32},
+    {(char)32, (char)32, (char)219}
 };
 
 char smallR[10][10] = {
-
-    {219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219},
-
-    {219, 32, 219},
-
-    {219, 32, 32, 219}
-
+    {(char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)219}
 };
 
 char smallP[10][10] = {
-
-    {219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219},
-
-    {219},
-
-    {219}
-
+    {(char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219}
 };
 
 char smallL[10][10] = {
-
-    {219},
-
-    {219},
-
-    {219},
-
-    {219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219},
+    {(char)219},
+    {(char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallY[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {32, 219, 32, 219, 32},
-
-    {32, 32, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)32, (char)219, (char)32, (char)219, (char)32},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219}
 };
 
 char smallW[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 219, 32, 219},
-
-    {219, 219, 32, 219, 219},
-
-    {219, 32, 32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)219, (char)32, (char)219},
+    {(char)219, (char)219, (char)32, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219}
 };
 
 char smallI[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallN[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 32, 32, 219},
-
-    {219, 32, 219, 32, 219},
-
-    {219, 32, 32, 219, 219},
-
-    {219, 32, 32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)219, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219}
 };
 
 char smallT[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219},
-
-    {32, 32, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219},
+    {(char)32, (char)32, (char)219}
 };
 
 char smallH[10][10] = {
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219},
-
-    {219, 32, 32, 32, 219},
-
-    {219, 32, 32, 32, 219}
-
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)32, (char)32, (char)32, (char)219}
 };
 
 char smallS[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219},
-
-    {219, 219, 219, 219, 219},
-
-    {32, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)32, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char smallC[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {219},
-
-    {219},
-
-    {219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 char small1[10][10] = {
-
-    {32, 219, 219},
-
-    {219, 219, 219},
-
-    {32, 219, 219},
-
-    {32, 219, 219},
-
-    {219, 219, 219, 219}
-
+    {(char)32, (char)219, (char)219},
+    {(char)219, (char)219, (char)219},
+    {(char)32, (char)219, (char)219},
+    {(char)32, (char)219, (char)219},
+    {(char)219, (char)219, (char)219, (char)219}
 };
 
 char small2[10][10] = {
-
-    {219, 219, 219, 219, 219},
-
-    {32, 32, 32, 32, 219},
-
-    {219, 219, 219, 219, 219},
-
-    {219},
-
-    {219, 219, 219, 219, 219}
-
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)32, (char)32, (char)32, (char)32, (char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219},
+    {(char)219},
+    {(char)219, (char)219, (char)219, (char)219, (char)219}
 };
 
 int index = 29, i = 0, color[] = {YELLOW, DARK_GREEN, PINK, YELLOW, GOLDEN}, car_color[] = {DARK_CYAN, RED, GREY, BLUE, GOLDEN, BLUE, DARK_CYAN}, gap = 2, p1 = 0, p2 = 1;
@@ -2313,7 +2163,7 @@ int about_us()
     getch();
 }
 
-void select_car()
+int select_car()
 {
     system("cls");
     setup();
@@ -2581,6 +2431,8 @@ int main()
 
     readData();
 
+    Sleep(5000);
+
     while(1)
     {
         f = select_mode();
@@ -2645,4 +2497,6 @@ int main()
             return 0;
         }
     }
+
+    getch();
 }
