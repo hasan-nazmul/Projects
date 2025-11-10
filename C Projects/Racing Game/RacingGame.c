@@ -32,6 +32,8 @@
 #define GOLDEN 70
 #define BLOOD_RED 20
 #define PINK 13
+#define TARGET_FPS 30
+#define FRAME_TIME (1000 / TARGET_FPS)
 
 void gotoxy(int x, int y);
 void gotoXY(COORD C);
@@ -431,6 +433,24 @@ void setColor(int ForgC)
     }
 
     return;
+}
+
+void hidecursor()
+{
+   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+   CONSOLE_CURSOR_INFO info;
+   info.dwSize = 100;
+   info.bVisible = FALSE;
+   SetConsoleCursorInfo(consoleHandle, &info);
+}
+
+void showcursor()
+{
+   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+   CONSOLE_CURSOR_INFO info;
+   info.dwSize = 10;
+   info.bVisible = TRUE;
+   SetConsoleCursorInfo(consoleHandle, &info);
 }
 
 void canvas(COORD upper_left, COORD lower_right, char ch1, char ch2, char ch3, char ch4, int color)
@@ -1383,6 +1403,8 @@ int login(int f)
 {
     setup();
 
+    showcursor();
+
     if(f)
     {
         setColor(RED);
@@ -1507,13 +1529,19 @@ int login(int f)
 
             avatar = IDcheck();
 
+            hidecursor();
+
             if(avatar < 0)
                 return login(1);
 
             return 1;
         }
 
-        else if(ch == 32)   return pos;
+        else if(ch == 32)
+        {
+            hidecursor();
+            return pos;
+        }
     }
 }
 
@@ -1941,6 +1969,8 @@ int signup(int f)
 {
     setup();
 
+    showcursor();
+
     if(f)
     {
         setColor(RED);
@@ -2103,12 +2133,18 @@ int signup(int f)
 
             pass[i] = '\0';
 
+            hidecursor();
+
             if(uniqueID())  return signup(1);
 
             return 1;
         }
 
-        else if(ch == 32)   return pos;
+        else if(ch == 32)
+        {
+            hidecursor();
+            return pos;
+        }
     }
 }
 
@@ -2431,6 +2467,8 @@ int main()
 
     readData();
 
+    hidecursor();
+
     Sleep(5000);
 
     while(1)
@@ -2498,5 +2536,5 @@ int main()
         }
     }
 
-    getch();
+    showcursor();
 }
