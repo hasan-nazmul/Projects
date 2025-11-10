@@ -485,6 +485,7 @@ void showcursor()
    SetConsoleCursorInfo(consoleHandle, &info);
 }
 
+// RENAMED from canvas. This is for the buffered game loop.
 void canvas(COORD upper_left, COORD lower_right, char ch1, char ch2, char ch3, char ch4, int color)
 {
     int i;
@@ -496,6 +497,28 @@ void canvas(COORD upper_left, COORD lower_right, char ch1, char ch2, char ch3, c
         drawToBuffer(upper_left.X, i, ch2, color);
         drawToBuffer(lower_right.X, i, ch4, color);
     }
+}
+
+// NEW function. This is the original direct-drawing version for menus.
+void canvas_direct(COORD upper_left, COORD lower_right, char ch1, char ch2, char ch3, char ch4, int color)
+{
+    setColor(color);
+    int i;
+    for(i = upper_left.X; i <= lower_right.X; i++)
+    {
+        gotoxy(i, upper_left.Y);
+        printf("%c", ch1);
+        gotoxy(i, lower_right.Y);
+        printf("%c", ch3);
+    }
+    for(i = upper_left.Y + 1; i < lower_right.Y; i++)
+    {
+        gotoxy(upper_left.X, i);
+        printf("%c", ch2);
+        gotoxy(lower_right.X, i);
+        printf("%c", ch4);
+    }
+    gotoxy(0,0);
 }
 
 int random(int left_val, int right_val)
@@ -987,7 +1010,7 @@ void mono_game_crash()
 
     system("cls");
 
-    canvas(upper_left, lower_right, 219, 219, 219, 219, BLUE);
+    canvas_direct(upper_left, lower_right, 219, 219, 219, 219, BLUE);
 
     draw_alphabet(smallG, i, j, YELLOW, 5);
 
@@ -1044,7 +1067,7 @@ void multi_game_crash(int f)
 
     system("cls");
 
-    canvas(upper_left, lower_right, 219, 219, 219, 219, BLUE);
+    canvas_direct(upper_left, lower_right, 219, 219, 219, 219, BLUE);
 
     if(f == 1)
     {
@@ -1186,7 +1209,7 @@ void setup()
     system("cls"); // Clear the screen directly.
 
     // Draw canvas directly.
-    canvas(upper_left, lower_right, 219, 219, 219, 219, BLUE);
+    canvas_direct(upper_left, lower_right, 219, 219, 219, 219, BLUE);
 
     draw_alphabet(R, 55, 5, DARK_CYAN, 10);
     draw_alphabet(E, 65, 5, RED, 10);
@@ -1819,7 +1842,7 @@ int purchase()
 {
     system("cls");
 
-    canvas(upper_left, lower_right, 219, 219, 219, 219, BLUE);
+    canvas_direct(upper_left, lower_right, 219, 219, 219, 219, BLUE);
 
     int i, value = 0;
 
